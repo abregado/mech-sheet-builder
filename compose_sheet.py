@@ -33,6 +33,8 @@ A4_H_MM = 210.0
 
 HEADER_SVG    = "header-row.svg"
 ROW_SVG       = "mech-row.svg"
+ARMOR_SVG     = "armor-square.svg"
+STRUCTURE_SVG = "structure-square.svg"
 SETTINGS_JSON = "settings.json"
 
 SVG_NS = "http://www.w3.org/2000/svg"
@@ -106,6 +108,31 @@ def add_text(parent: ET.Element, text: str, x: float, y: float,
     el.text = text
 
 
+def place_boxes(parent: ET.Element, box_root: ET.Element,
+                count: int, x_start: float, y: float, gap: float) -> None:
+    """Place `count` copies of box_root in a horizontal strip inside parent.
+
+    Positions and sizes are in user units (= mm for the mech-row viewBox).
+    Using unitless values avoids SVG viewport-relative unit resolution that
+    can cause apparent scaling errors inside nested <svg> elements.
+    """
+    bw, bh = svg_dims_mm(box_root)
+    vb = box_root.get("viewBox") or box_root.get("viewbox")
+    x = x_start
+    for _ in range(count):
+        node = ET.SubElement(parent, f"{{{SVG_NS}}}svg")
+        node.set("x",      str(x))   # unitless user units
+        node.set("y",      str(y))   # unitless user units
+        node.set("width",  str(bw))  # unitless user units
+        node.set("height", str(bh))  # unitless user units
+        if vb:
+            node.set("viewBox", vb)
+        for child in box_root:
+            if child.tag not in SKIP_TAGS:
+                node.append(copy.deepcopy(child))
+        x += bw + gap
+
+
 def read_csv_rows(csv_path: Path) -> tuple[list[str], list[dict]]:
     """Return (headers, rows) from a CSV, skipping blank rows."""
     with csv_path.open(newline="", encoding="cp1252") as f:
@@ -116,7 +143,8 @@ def read_csv_rows(csv_path: Path) -> tuple[list[str], list[dict]]:
 
 
 def build_sheet(csv_path: Path, header_root: ET.Element, row_root: ET.Element,
-                row_spacing: float, col_settings: dict) -> None:
+                armor_root: ET.Element, structure_root: ET.Element,
+                row_spacing: float, col_settings: dict, box_settings: dict) -> None:
     headers, data_rows = read_csv_rows(csv_path)
 
     _, hh = svg_dims_mm(header_root)
@@ -131,7 +159,6 @@ def build_sheet(csv_path: Path, header_root: ET.Element, row_root: ET.Element,
     svg_h = A4_H_MM
 
     page = ET.Element(f"{{{SVG_NS}}}svg")
-    page.set("xmlns",   SVG_NS)
     page.set("version", "1.1")
     page.set("width",   f"{svg_w}mm")
     page.set("height",  f"{svg_h}mm")
@@ -145,20 +172,42 @@ def build_sheet(csv_path: Path, header_root: ET.Element, row_root: ET.Element,
 
     embed(page, header_root, 0, 0)
 
+    x_start  = box_settings["x_start"]
+    armor_y  = box_settings["armor_y"]
+    struct_y = box_settings["structure_y"]
+    gap      = box_settings.get("gap", 0.5)
+
     y = hh
     for i in range(max_rows):
         row_node = embed(page, row_root, 0, y)
 
         if i < len(data_rows):
+            row = data_rows[i]
+
             # Inject CSV values as new text elements inside this row's <svg>
             for col_name, pos in col_settings.items():
-                value = data_rows[i].get(col_name, "").strip()
+                value = row.get(col_name, "").strip()
                 if value:
                     add_text(row_node, value,
                              pos["x"], pos["y"],
                              font_size=pos.get("font_size", 3.0),
                              align=pos.get("align", "left"),
                              replace_underscores=pos.get("replace_underscores", False))
+
+            try:
+                armor_count = int(row.get("Armor", "0").strip())
+            except ValueError:
+                armor_count = 0
+            try:
+                structure_count = int(row.get("Structure", "0").strip())
+            except ValueError:
+                structure_count = 0
+        else:
+            armor_count     = 10
+            structure_count = 10
+
+        place_boxes(row_node, armor_root,     armor_count,     x_start, armor_y,  gap)
+        place_boxes(row_node, structure_root, structure_count, x_start, struct_y, gap)
 
         y += rh + row_spacing
 
@@ -178,11 +227,14 @@ def main():
     with open(SETTINGS_JSON, encoding="utf-8") as f:
         settings = json.load(f)
 
-    row_spacing  = float(settings["row_spacing_mm"])
-    col_settings = settings.get("columns", {})
+    row_spacing   = float(settings["row_spacing_mm"])
+    col_settings  = settings.get("columns", {})
+    box_settings  = settings.get("boxes", {})
 
-    header_root = ET.parse(HEADER_SVG).getroot()
-    row_root    = ET.parse(ROW_SVG).getroot()
+    header_root    = ET.parse(HEADER_SVG).getroot()
+    row_root       = ET.parse(ROW_SVG).getroot()
+    armor_root     = ET.parse(ARMOR_SVG).getroot()
+    structure_root = ET.parse(STRUCTURE_SVG).getroot()
 
     csv_files = sorted(Path(".").glob("*.csv"))
     if not csv_files:
@@ -191,7 +243,8 @@ def main():
 
     print(f"Row spacing: {row_spacing} mm | Columns mapped: {list(col_settings)}\n")
     for csv_path in csv_files:
-        build_sheet(csv_path, header_root, row_root, row_spacing, col_settings)
+        build_sheet(csv_path, header_root, row_root, armor_root, structure_root,
+                    row_spacing, col_settings, box_settings)
 
 
 if __name__ == "__main__":
