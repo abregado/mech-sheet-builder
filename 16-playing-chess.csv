@@ -1,0 +1,5 @@
+Name,Role,TP,SZ,TMM,Speed,OV,S,M,L,Armor,Structure,Special,Skill
+Thunderbolt IIC,Brawler,BM,3,2,10j,2,5,5,2,7,4,“CASEII”,3
+Bane 5,Juggernaut,BM,4,1,6,1,5,5,5,10,5,“CASEII_ECM_IF1_LRM1/1/1_OVL”,3
+Fulcrum Heavy Hovertank II,Striker[Hover],CV,2,4,20h,0,3,3,1,5,3,“ECM_IF1_SRCH_TAG_TUR[3/3/1_IF1]”,3
+Fulcrum Heavy Hovertank II,Striker[Hover],CV,2,4,20h,0,3,3,1,5,3,“ECM_IF1_SRCH_TAG_TUR[3/3/1_IF1]”,3

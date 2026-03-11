@@ -1,0 +1,11 @@
+Name,Role,TP,SZ,TMM,Speed,OV,S,M,L,Armor,Structure,Special,Skill
+Medium Emplacement,,BD,4,0,0,0,1,1,1,4,4,"""CF:4_AC1/1/1_IMMOBILE""",4
+Medium Emplacement,,BD,4,0,0,0,1,1,1,4,4,"""CF:4_AC1/1/1_IMMOBILE""",4
+Medium Emplacement,,BD,4,0,0,0,1,1,1,4,4,"""CF:4_AC1/1/1_IMMOBILE""",4
+Medium Emplacement,,BD,4,0,0,0,1,1,1,4,4,"""CF:4_AC1/1/1_IMMOBILE""",4
+Thunderbolt IIC,Brawler,BM,3,2,10j,2,5,5,2,7,4,"""CASEII""",2
+Summoner H,Skirmisher,BM,3,2,10j,0,5,5,0,6,4,"""AMS_CASE_OMNI""",3
+Elemental Squad,Ambusher[Infantry],BA,1,1,6j,0,2,2,0,2,2,"""AM_CAR5_MEC""",3
+Elemental Squad,Ambusher[Infantry],BA,1,1,6j,0,2,2,0,2,2,"""AM_CAR5_MEC""",3
+Elemental Squad,Ambusher[Infantry],BA,1,1,6j,0,2,2,0,2,2,"""AM_CAR5_MEC""",3
+Elemental Squad,Ambusher[Infantry],BA,1,1,6j,0,2,2,0,2,2,"""AM_CAR5_MEC""",3

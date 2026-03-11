@@ -1,0 +1,10 @@
+Name,Role,TP,SZ,TMM,Speed,OV,S,M,L,Armor,Structure,Special,Skill
+Heavy Emplacement,,BD,6,0,0,0,2,2,0,6,6,“CF:6_AC2/2/0_IMMOBILE”,4
+Heavy Emplacement,,BD,6,0,0,0,2,2,0,6,6,“CF:6_AC2/2/0_IMMOBILE”,4
+Medium Emplacement,,BD,4,0,0,0,1,1,1,4,4,“CF:4_AC1/1/1_IMMOBILE”,4
+Medium Emplacement,,BD,4,0,0,0,1,1,1,4,4,“CF:4_AC1/1/1_IMMOBILE”,4
+Thunderbolt IIC,Brawler,BM,3,2,10j,2,5,5,2,7,4,“CASEII”,3
+Bane 3,Missile Boat,BM,4,1,6,0,8,8,8,10,5,“CASE_IF7_LRM7/7/7”,3
+Marauder IIC 6,Skirmisher,BM,4,1,8/12j,1,4,5,3,7,5,“CASE_FLK1/1/1_JMPS1”,3
+Rifleman C3,Sniper,BM,3,1,8,1,4,4,4,6,5,“CASE”,3
+Howler,Scout,BM,1,3,14,0,1,1,1,2,2,“CASE_IF1”,3

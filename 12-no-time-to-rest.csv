@@ -1,0 +1,6 @@
+Name,Role,TP,SZ,TMM,Speed,OV,S,M,L,Armor,Structure,Special,Skill
+Thunderbolt IIC,Brawler,BM,3,2,10j,2,5,5,2,7,4,“CASEII”,3
+Rifleman C2,Skirmisher[JMPS],BM,3,2,12/18j,1,3,3,2,6,3,“CASE_JMPS1”,3
+Summoner A,Sniper,BM,3,2,10j,0,3,4,3,6,4,“CASE_OMNI”,3
+Fulcrum Heavy Hovertank II,Striker[Hover],CV,2,4,20h,0,3,3,1,5,3,“ECM_IF1_SRCH_TAG_TUR[3/3/1_IF1]”,3
+Fulcrum Heavy Hovertank II,Striker[Hover],CV,2,4,20h,0,3,3,1,5,3,“ECM_IF1_SRCH_TAG_TUR[3/3/1_IF1]”,3
