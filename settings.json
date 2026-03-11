@@ -1,3 +1,17 @@
 {
-  "row_spacing_mm": 1.0
+  "row_spacing_mm": 1.0,
+  "columns": {
+    "Name":      { "x": 3,     "y": 5,   "font_size": 3, "align": "left",   "replace_underscores": false },
+    "Role":      { "x": 3,     "y": 10,  "font_size": 3, "align": "left",   "replace_underscores": false },
+    "TP":        { "x": 50.0,  "y": 8.5, "font_size": 4, "align": "centre", "replace_underscores": false },
+    "SZ":        { "x": 60.0,  "y": 8.5, "font_size": 4, "align": "centre", "replace_underscores": false },
+    "TMM":       { "x": 70.0,  "y": 8.5, "font_size": 4, "align": "centre", "replace_underscores": false },
+    "Speed":     { "x": 88.0,  "y": 8.5, "font_size": 4, "align": "centre", "replace_underscores": false },
+    "OV":        { "x": 105.0, "y": 9.5, "font_size": 4, "align": "centre", "replace_underscores": false },
+    "S":         { "x": 114.0, "y": 7.5, "font_size": 4, "align": "centre", "replace_underscores": false },
+    "M":         { "x": 124.0, "y": 7.5, "font_size": 4, "align": "centre", "replace_underscores": false },
+    "L":         { "x": 134.0, "y": 7.5, "font_size": 4, "align": "centre", "replace_underscores": false },
+    "Special":   { "x": 152.0, "y": 7.0, "font_size": 2, "align": "left",   "replace_underscores": true  },
+    "Skill":     { "x": 205.0, "y": 8.5, "font_size": 3, "align": "centre", "replace_underscores": false }
+  }
 }
