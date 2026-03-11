@@ -95,7 +95,8 @@ ALIGN_TO_ANCHOR = {"left": "start", "centre": "middle", "right": "end"}
 
 def add_text(parent: ET.Element, text: str, x: float, y: float,
              font_size: float = 3.0, align: str = "left",
-             replace_underscores: bool = False) -> None:
+             replace_underscores: bool = False,
+             font_family: str = "sans-serif") -> None:
     """Append a <text> element at (x, y) in the parent's coordinate space."""
     if replace_underscores:
         text = text.replace("_", ", ")
@@ -103,7 +104,7 @@ def add_text(parent: ET.Element, text: str, x: float, y: float,
     el.set("x", str(x))
     el.set("y", str(y))
     el.set("font-size", str(font_size))
-    el.set("font-family", "sans-serif")
+    el.set("font-family", font_family)
     el.set("text-anchor", ALIGN_TO_ANCHOR.get(align, "start"))
     el.text = text
 
@@ -133,6 +134,19 @@ def place_boxes(parent: ET.Element, box_root: ET.Element,
         x += bw + gap
 
 
+def mission_name_from_path(csv_path: Path) -> str:
+    """Derive a readable mission name from the CSV filename.
+    Replaces dashes/underscores with spaces and title-cases each word.
+    Numbers are kept as-is.  e.g. '01-mission-name.csv' -> '01 Mission Name'
+    """
+    return csv_path.stem.replace("-", " ").replace("_", " ").title()
+
+
+def clean(value: str) -> str:
+    """Strip whitespace and quote characters from a CSV field value."""
+    return value.strip().replace('"', '').replace('\u201c', '').replace('\u201d', '')
+
+
 def read_csv_rows(csv_path: Path) -> tuple[list[str], list[dict]]:
     """Return (headers, rows) from a CSV, skipping blank rows."""
     with csv_path.open(newline="", encoding="cp1252") as f:
@@ -144,14 +158,16 @@ def read_csv_rows(csv_path: Path) -> tuple[list[str], list[dict]]:
 
 def build_sheet(csv_path: Path, header_root: ET.Element, row_root: ET.Element,
                 armor_root: ET.Element, structure_root: ET.Element,
-                row_spacing: float, col_settings: dict, box_settings: dict) -> None:
+                row_spacing: float, header_spacing: float,
+                col_settings: dict, box_settings: dict,
+                mission_name_settings: dict, font_family: str) -> None:
     headers, data_rows = read_csv_rows(csv_path)
 
     _, hh = svg_dims_mm(header_root)
     _, rh = svg_dims_mm(row_root)
 
-    # Total slots the page can hold
-    max_rows  = math.floor((A4_H_MM - hh) / (rh + row_spacing))
+    # Total slots the page can hold (header + spacing + rows)
+    max_rows  = math.floor((A4_H_MM - hh - header_spacing) / (rh + row_spacing))
     data_rows = data_rows[:max_rows]
 
     svg_w = max(parse_mm(header_root.get("width", "0")),
@@ -172,12 +188,20 @@ def build_sheet(csv_path: Path, header_root: ET.Element, row_root: ET.Element,
 
     embed(page, header_root, 0, 0)
 
+    # Mission name overlaid on the header
+    mn = mission_name_settings
+    add_text(page, mission_name_from_path(csv_path),
+             mn["x"], mn["y"],
+             font_size=mn.get("font_size", 6),
+             align=mn.get("align", "left"),
+             font_family=font_family)
+
     x_start  = box_settings["x_start"]
     armor_y  = box_settings["armor_y"]
     struct_y = box_settings["structure_y"]
     gap      = box_settings.get("gap", 0.5)
 
-    y = hh
+    y = hh + header_spacing
     for i in range(max_rows):
         row_node = embed(page, row_root, 0, y)
 
@@ -186,20 +210,21 @@ def build_sheet(csv_path: Path, header_root: ET.Element, row_root: ET.Element,
 
             # Inject CSV values as new text elements inside this row's <svg>
             for col_name, pos in col_settings.items():
-                value = row.get(col_name, "").strip()
+                value = clean(row.get(col_name, ""))
                 if value:
                     add_text(row_node, value,
                              pos["x"], pos["y"],
                              font_size=pos.get("font_size", 3.0),
                              align=pos.get("align", "left"),
-                             replace_underscores=pos.get("replace_underscores", False))
+                             replace_underscores=pos.get("replace_underscores", False),
+                             font_family=font_family)
 
             try:
-                armor_count = int(row.get("Armor", "0").strip())
+                armor_count = int(clean(row.get("Armor", "0")))
             except ValueError:
                 armor_count = 0
             try:
-                structure_count = int(row.get("Structure", "0").strip())
+                structure_count = int(clean(row.get("Structure", "0")))
             except ValueError:
                 structure_count = 0
         else:
@@ -227,9 +252,12 @@ def main():
     with open(SETTINGS_JSON, encoding="utf-8") as f:
         settings = json.load(f)
 
-    row_spacing   = float(settings["row_spacing_mm"])
-    col_settings  = settings.get("columns", {})
-    box_settings  = settings.get("boxes", {})
+    font_family    = settings.get("font_family", "sans-serif")
+    row_spacing    = float(settings["row_spacing_mm"])
+    header_spacing = float(settings.get("header_spacing_mm", 0.0))
+    col_settings   = settings.get("columns", {})
+    box_settings   = settings.get("boxes", {})
+    mn_settings    = settings.get("mission_name", {})
 
     header_root    = ET.parse(HEADER_SVG).getroot()
     row_root       = ET.parse(ROW_SVG).getroot()
@@ -244,7 +272,8 @@ def main():
     print(f"Row spacing: {row_spacing} mm | Columns mapped: {list(col_settings)}\n")
     for csv_path in csv_files:
         build_sheet(csv_path, header_root, row_root, armor_root, structure_root,
-                    row_spacing, col_settings, box_settings)
+                    row_spacing, header_spacing, col_settings, box_settings,
+                    mn_settings, font_family)
 
 
 if __name__ == "__main__":
