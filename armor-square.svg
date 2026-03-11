@@ -7,46 +7,73 @@
    viewBox="0 0 6.0581169 6.0581093"
    version="1.1"
    id="svg1"
+   sodipodi:docname="armor-square.svg"
+   inkscape:export-filename="armor-square.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#cccccc"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="1"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="35.245114"
+     inkscape:cx="11.448395"
+     inkscape:cy="11.448395"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
   <defs
      id="defs1" />
   <g
      id="layer1"
-     transform="translate(-58.737492,-155.24474)">
+     transform="matrix(0.99024583,0,0,0.99016463,-58.164069,-153.71736)"
+     style="stroke-width:1.00989">
     <g
        id="g104"
        transform="matrix(0.99301941,0,0,0.99301813,-91.89055,157.95716)"
-       style="stroke-width:1.00703">
+       style="stroke-width:1.01699">
       <rect
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.100703;stroke-dasharray:none"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.101699;stroke-dasharray:none"
          id="rect61"
          width="6"
          height="6"
          x="151.73726"
          y="-2.6811504"
-         ry="0.80000001"
-         rx="0.80000001" />
+         ry="0.80794644"
+         rx="0.80788022" />
       <rect
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.0503515;stroke-dasharray:none"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.0508496;stroke-dasharray:none"
          id="rect62"
          width="5.7049179"
          height="5.7049179"
          x="151.8848"
          y="-2.5336094"
-         ry="0.70540971"
-         rx="0.70540971" />
+         ry="0.71241659"
+         rx="0.71235818" />
       <g
          id="g64"
-         style="stroke-width:1.00703">
+         style="stroke-width:1.01699">
         <circle
-           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0503514;stroke-dasharray:none"
+           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0508495;stroke-dasharray:none"
            id="path62"
            cx="152.31596"
            cy="-2.0821385"
            r="0.14768207" />
         <circle
-           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0503514;stroke-dasharray:none"
+           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0508495;stroke-dasharray:none"
            id="circle62"
            cx="157.1678"
            cy="-2.0821385"
@@ -55,15 +82,15 @@
       <g
          id="g65"
          transform="translate(0,0.07952111)"
-         style="stroke-width:1.00703">
+         style="stroke-width:1.01699">
         <circle
-           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0503514;stroke-dasharray:none"
+           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0508495;stroke-dasharray:none"
            id="circle63"
            cx="152.31596"
            cy="2.6411746"
            r="0.14768207" />
         <circle
-           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0503514;stroke-dasharray:none"
+           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0508495;stroke-dasharray:none"
            id="circle64"
            cx="157.1678"
            cy="2.6411746"
