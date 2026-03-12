@@ -236,7 +236,7 @@ def build_sheet(csv_path: Path, header_root: ET.Element, row_root: ET.Element,
 
         y += rh + row_spacing
 
-    out_path = csv_path.with_suffix(".svg")
+    out_path = Path("output") / csv_path.with_suffix(".svg").name
     tree = ET.ElementTree(page)
     ET.indent(tree, space="  ")
     tree.write(str(out_path),
@@ -264,7 +264,8 @@ def main():
     armor_root     = ET.parse(ARMOR_SVG).getroot()
     structure_root = ET.parse(STRUCTURE_SVG).getroot()
 
-    csv_files = sorted(Path(".").glob("*.csv"))
+    Path("output").mkdir(exist_ok=True)
+    csv_files = sorted(Path("data").glob("*.csv"))
     if not csv_files:
         print("No CSV files found.")
         return
