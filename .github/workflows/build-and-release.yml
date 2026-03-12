@@ -1,0 +1,43 @@
+name: Build Sheets and Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Generate SVGs
+        run: python compose_sheet.py
+
+      - name: Upload SVGs as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sheets
+          path: output/*.svg
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: "Sheets – build ${{ github.run_number }}"
+          body: |
+            Auto-generated from commit ${{ github.sha }}.
+
+            Download individual sheets below, or grab the [full artifact](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}).
+          files: output/*.svg
+          generate_release_notes: false
