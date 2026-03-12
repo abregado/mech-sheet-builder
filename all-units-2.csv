@@ -1,0 +1,11 @@
+Name,Role,TP,SZ,TMM,Speed,OV,S,M,L,Armor,Structure,Special,Skill
+Summoner A,Sniper,BM,3,2,10j,0,3,4,3,6,4,“CASE_OMNI”,3
+Summoner H,Skirmisher,BM,3,2,10j,0,5,5,0,6,4,“AMS_CASE_OMNI”,3
+Thunderbolt IIC,Brawler,BM,3,2,10j,2,5,5,2,7,4,“CASEII”,3
+Thunderbolt IIC 2,Brawler,BM,3,1,8j,2,4,4,2,7,6,“CASE_ECM”,3
+Clan Foot Point,Ambusher[Infantry],CI,1,0,2f,0,1,1,0,3,1,“AM_CAR3”,3
+Fulcrum Heavy Hovertank,Striker[Hover],CV,2,4,20h,0,2,2,1,5,3,“ECM_IF1_SRCH_TAG_TUR[2/2/1_IF1]”,3
+Fulcrum Heavy Hovertank II,Striker[Hover],CV,2,4,20h,0,3,3,1,5,3,“ECM_IF1_SRCH_TAG_TUR[3/3/1_IF1]”,3
+Elemental Squad,Ambusher[Infantry],BA,1,1,6j,0,2,2,0,2,2,“AM_CAR5_MEC”,3
+Heavy Emplacement,,BD,6,0,0,0,2,2,0,6,6,“CF:6_AC2/2/0_IMMOBILE”,4
+Medium Emplacement,,BD,4,0,0,0,1,1,1,4,4,“CF:4_AC1/1/1_IMMOBILE”,4
