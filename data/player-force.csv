@@ -1,0 +1,10 @@
+Name,Role,TP,SZ,TMM,Speed,OV,S,M,L,Armor,Structure,Special,Skill
+Awesome AWS-9Q,Sniper,BM,4,1,6,0,4,4,4,8,6,ECM_ENE,45
+Dragon DRG-7N,Skirmisher,BM,3,2,10,0,3,4,2,5,3,CASE,35
+Grasshopper GHR-7X,Skirmisher,BM,3,1,8/12j,0,3,3,0,7,4,BH_ENE_JMPS1_RCN,39
+Catapult CPLT-C4C,Missile Boat,BM,3,1,8j,1,3,3,3,5,3,“IF2_LRM1/2/2_PRB_RCN”,36
+Zeus ZEU-9S-DL,Sniper,BM,4,1,8,1,3,3,3,7,6,CASE_IF1_MHQ1,40
+Spider SDR-C,Striker,BM,1,3,16j,0,2,2,0,2,3,C3S_ENE_MHQ1,28
+Enforcer ENF-6G,Skirmisher,BM,2,2,10j,0,4,4,2,5,2,,35
+Hunchback HBK-5H,Juggernaut,BM,2,1,8,0,4,4,0,5,4,“AC2/2/0_CASE”,30
+Panther PNT-12A,Brawler,BM,1,1,8j,0,3,3,1,4,3,CASE,24
