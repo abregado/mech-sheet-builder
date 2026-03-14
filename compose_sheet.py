@@ -74,16 +74,20 @@ def svg_dims_mm(root: ET.Element) -> tuple[float, float]:
 def embed(parent: ET.Element, src: ET.Element, x: float, y: float) -> ET.Element:
     """
     Nest src's children inside a new <svg> at (x mm, y mm) at natural size.
+    Uses unitless coordinate values so renderers don't apply mm-to-user-unit
+    conversion (which would scale content ~3.78× when parent 1 unit = 1 mm).
     Returns the new <svg> element so callers can append additional children.
     """
     vb = src.get("viewBox") or src.get("viewbox")
+    w, h = svg_dims_mm(src)
     node = ET.SubElement(parent, f"{{{SVG_NS}}}svg")
-    node.set("x",      f"{x}mm")
-    node.set("y",      f"{y}mm")
-    node.set("width",  src.get("width",  "0"))
-    node.set("height", src.get("height", "0"))
+    node.set("x",      str(x))   # unitless parent user units (= mm)
+    node.set("y",      str(y))   # unitless parent user units (= mm)
+    node.set("width",  str(w))   # unitless parent user units (= mm)
+    node.set("height", str(h))   # unitless parent user units (= mm)
     if vb:
         node.set("viewBox", vb)
+    node.set("overflow", "visible")
     for child in src:
         if child.tag not in SKIP_TAGS:
             node.append(copy.deepcopy(child))
@@ -182,8 +186,8 @@ def build_sheet(csv_path: Path, header_root: ET.Element, row_root: ET.Element,
 
     bg = ET.SubElement(page, f"{{{SVG_NS}}}rect")
     bg.set("x", "0"); bg.set("y", "0")
-    bg.set("width",  f"{svg_w}mm")
-    bg.set("height", f"{svg_h}mm")
+    bg.set("width",  str(svg_w))
+    bg.set("height", str(svg_h))
     bg.set("fill",   "white")
 
     embed(page, header_root, 0, 0)
