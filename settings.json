@@ -17,9 +17,9 @@
   },
   "header_spacing_mm": 2.0,
   "mission_name": {
-    "x": 140.0,
-    "y": 52.0,
-    "font_size": 14,
+    "x": 37.0,
+    "y": 13.7,
+    "font_size": 3.7,
     "align": "left"
   },
   "boxes": {
