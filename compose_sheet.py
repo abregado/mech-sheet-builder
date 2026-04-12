@@ -114,16 +114,23 @@ def add_text(parent: ET.Element, text: str, x: float, y: float,
 
 
 def place_boxes(parent: ET.Element, box_root: ET.Element,
-                count: int, x_start: float, y: float, gap: float) -> None:
+                count: int, x_ref: float, y: float, gap: float,
+                align: str = "left") -> None:
     """Place `count` copies of box_root in a horizontal strip inside parent.
 
     Positions and sizes are in user units (= mm for the mech-row viewBox).
     Using unitless values avoids SVG viewport-relative unit resolution that
     can cause apparent scaling errors inside nested <svg> elements.
+
+    align="left"  – x_ref is the left edge of the first box.
+    align="right" – x_ref is the right edge of the last box; boxes grow left.
     """
     bw, bh = svg_dims_mm(box_root)
     vb = box_root.get("viewBox") or box_root.get("viewbox")
-    x = x_start
+    if align == "right":
+        x = x_ref - (count * bw + (count - 1) * gap)
+    else:
+        x = x_ref
     for _ in range(count):
         node = ET.SubElement(parent, f"{{{SVG_NS}}}svg")
         node.set("x",      str(x))   # unitless user units
@@ -167,26 +174,32 @@ def build_sheet(csv_path: Path, header_root: ET.Element, row_root: ET.Element,
                 mission_name_settings: dict, font_family: str) -> None:
     headers, data_rows = read_csv_rows(csv_path)
 
-    _, hh = svg_dims_mm(header_root)
-    _, rh = svg_dims_mm(row_root)
+    hw, hh = svg_dims_mm(header_root)
+    rw, rh = svg_dims_mm(row_root)
 
     # Total slots the page can hold (header + spacing + rows)
     max_rows  = math.floor((A4_H_MM - hh - header_spacing) / (rh + row_spacing))
     data_rows = data_rows[:max_rows]
 
-    svg_w = max(parse_mm(header_root.get("width", "0")),
-                parse_mm(row_root.get("width", "0")))
-    svg_h = A4_H_MM
+    # Right-align header to row: header shifts left so both share the same right edge.
+    # left_margin is the amount the header extends beyond the row's left edge.
+    left_margin = max(hw - rw, 0.0)
+    total_w     = max(hw, rw)   # page width == wider of the two SVGs
+    vb_x        = -left_margin  # viewBox origin shifts left to reveal box area
+    svg_h       = A4_H_MM
+
+    box_align = box_settings.get("align", "left")
 
     page = ET.Element(f"{{{SVG_NS}}}svg")
     page.set("version", "1.1")
-    page.set("width",   f"{svg_w}mm")
+    page.set("width",   f"{total_w}mm")
     page.set("height",  f"{svg_h}mm")
-    page.set("viewBox", f"0 0 {svg_w} {svg_h}")
+    page.set("viewBox", f"{vb_x} 0 {total_w} {svg_h}")
 
     bg = ET.SubElement(page, f"{{{SVG_NS}}}rect")
-    bg.set("x", "0"); bg.set("y", "0")
-    bg.set("width",  str(svg_w))
+    bg.set("x",      str(vb_x))
+    bg.set("y",      "0")
+    bg.set("width",  str(total_w))
     bg.set("height", str(svg_h))
     bg.set("fill",   "white")
 
@@ -197,13 +210,14 @@ def build_sheet(csv_path: Path, header_root: ET.Element, row_root: ET.Element,
     for i in range(max_rows):
         row_y = y0 + i * (rh + row_spacing)
         band = ET.SubElement(page, f"{{{SVG_NS}}}rect")
-        band.set("x", "0")
-        band.set("y", str(row_y - half_gap))
-        band.set("width",  str(svg_w))
+        band.set("x",      str(vb_x))
+        band.set("y",      str(row_y - half_gap))
+        band.set("width",  str(total_w))
         band.set("height", str(rh + row_spacing))
-        band.set("fill", ROW_COLORS[i % 2])
+        band.set("fill",   ROW_COLORS[i % 2])
 
-    embed(page, header_root, 0, 0)
+    # Header right-aligned to row right edge
+    embed(page, header_root, vb_x, 0)
 
     # Mission name overlaid on the header
     mn = mission_name_settings
@@ -213,7 +227,7 @@ def build_sheet(csv_path: Path, header_root: ET.Element, row_root: ET.Element,
              align=mn.get("align", "left"),
              font_family=font_family)
 
-    x_start  = box_settings["x_start"]
+    x_ref    = box_settings.get("x_end" if box_align == "right" else "x_start", 0.0)
     armor_y  = box_settings["armor_y"]
     struct_y = box_settings["structure_y"]
     gap      = box_settings.get("gap", 0.5)
@@ -248,8 +262,8 @@ def build_sheet(csv_path: Path, header_root: ET.Element, row_root: ET.Element,
             armor_count     = 10
             structure_count = 10
 
-        place_boxes(row_node, armor_root,     armor_count,     x_start, armor_y,  gap)
-        place_boxes(row_node, structure_root, structure_count, x_start, struct_y, gap)
+        place_boxes(row_node, armor_root,     armor_count,     x_ref, armor_y,  gap, box_align)
+        place_boxes(row_node, structure_root, structure_count, x_ref, struct_y, gap, box_align)
 
         y += rh + row_spacing
 

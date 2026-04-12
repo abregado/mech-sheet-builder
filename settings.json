@@ -17,15 +17,16 @@
   },
   "header_spacing_mm": 2.0,
   "mission_name": {
-    "x": 37.0,
+    "x": -29.5,
     "y": 13.7,
     "font_size": 3.7,
     "align": "left"
   },
   "boxes": {
-    "x_start":    211.5,
-    "armor_y":    0.1,
+    "x_end":       0,
+    "align":       "right",
+    "armor_y":     0.1,
     "structure_y": 6.658,
-    "gap":        0.5
+    "gap":         0.5
   }
 }
