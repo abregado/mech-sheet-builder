@@ -1,6 +1,6 @@
 {
   "font_family": "Titillium Web",
-  "row_spacing_mm": 1.0,
+  "row_spacing_mm": 2.0,
   "columns": {
     "Name":      { "x": 3,     "y": 5,   "font_size": 3, "align": "left",   "replace_underscores": false },
     "Role":      { "x": 3,     "y": 10,  "font_size": 3, "align": "left",   "replace_underscores": false },

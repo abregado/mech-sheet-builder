@@ -190,6 +190,19 @@ def build_sheet(csv_path: Path, header_root: ET.Element, row_root: ET.Element,
     bg.set("height", str(svg_h))
     bg.set("fill",   "white")
 
+    # Alternating row backgrounds (white / light grey), drawn before header/rows
+    half_gap = row_spacing / 2
+    y0 = hh + header_spacing
+    ROW_COLORS = ["white", "#e8e8e8"]
+    for i in range(max_rows):
+        row_y = y0 + i * (rh + row_spacing)
+        band = ET.SubElement(page, f"{{{SVG_NS}}}rect")
+        band.set("x", "0")
+        band.set("y", str(row_y - half_gap))
+        band.set("width",  str(svg_w))
+        band.set("height", str(rh + row_spacing))
+        band.set("fill", ROW_COLORS[i % 2])
+
     embed(page, header_root, 0, 0)
 
     # Mission name overlaid on the header
