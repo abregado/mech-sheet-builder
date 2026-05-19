@@ -1,9 +1,9 @@
 {
   "font_family": "Titillium Web",
-  "row_spacing_mm": 2.0,
+  "row_spacing_mm": 3.0,
   "columns": {
-    "Name":      { "x": 3,     "y": 5,   "font_size": 3, "align": "left",   "replace_underscores": false },
-    "Role":      { "x": 3,     "y": 10,  "font_size": 3, "align": "left",   "replace_underscores": false },
+    "Name":      { "x": 4,     "y": 5,   "font_size": 3, "align": "left",   "replace_underscores": false },
+    "Role":      { "x": 4,     "y": 10,  "font_size": 3, "align": "left",   "replace_underscores": false },
     "TP":        { "x": 48.0,  "y": 8.5, "font_size": 5, "align": "centre", "replace_underscores": false },
     "SZ":        { "x": 60.0,  "y": 8.5, "font_size": 5, "align": "centre", "replace_underscores": false },
     "TMM":       { "x": 70.0,  "y": 8.5, "font_size": 5, "align": "centre", "replace_underscores": false },
@@ -18,7 +18,7 @@
   "header_spacing_mm": 2.0,
   "mission_name": {
     "x": -29.5,
-    "y": 13.7,
+    "y": 12.8,
     "font_size": 3.7,
     "align": "left"
   },
