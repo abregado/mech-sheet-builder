@@ -1,0 +1,11 @@
+Name,Role,TP,SZ,TMM,Speed,OV,S,M,L,Armor,Structure,Special,PV
+Fire Moth D,Striker,BM,1,4,26,1,4,3,0,1,1,"ENE, OMNI",30
+Fire Moth G,Striker,BM,1,4,30,1,4,4,0,1,1,"CASE, OMNI",35
+Pouncer Prime,Sniper,BM,2,2,12/10j,1,3,3,3,4,2,"ENE, OMNI, OVL",31
+Pouncer T,Scout,BM,2,2,12/10j,0,3,3,0,4,2,"ENE, HT1/1/-, OMNI",29
+Nova Prime,Skirmisher,BM,2,2,10j,4,5,5,0,5,3,"ENE, OMNI",41
+Nova T,Skirmisher,BM,2,2,10j,0,6,6,0,5,3,"CASE, OMNI",42
+Timber Wolf Prime,Brawler,BM,3,2,10,1,5,5,4,8,4,"CASE, IF1, LRM1/1/2, OMNI",54
+Timber Wolf T,Missile Boat,BM,3,2,10,2,7,7,4,8,4,"CASE, IF2, OMNI",62
+Warhawk C,Sniper,BM,4,1,8,0,6,6,6,9,5,"ENE, OMNI",53
+Warhawk T,Brawler,BM,4,1,8,1,5,5,4,9,5,"ENE, HT1/1/-, OMNI",50
